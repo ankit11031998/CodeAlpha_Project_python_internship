@@ -1,0 +1,46 @@
+import nltk
+import random
+import re
+import numpy as np
+
+# Download the necessary NLTK resources
+nltk.download('punkt')
+
+# Predefined responses
+responses = {
+    "greeting": ["Hello! How can I assist you today?", "Hi there! What can I do for you?", "Greetings! How may I help you?"],
+    "goodbye": ["Goodbye! Have a great day!", "See you later!", "Take care!"],
+    "thanks": ["You're welcome!", "No problem!", "Glad to help!"],
+    "default": ["I'm sorry, I didn't understand that.", "Could you please rephrase?", "I'm not sure how to respond to that."]
+}
+
+# Function to get a response based on user input
+def get_response(user_input):
+    user_input = user_input.lower()
+    
+    # Simple pattern matching
+    if re.search(r'\bhello\b|\bhi\b|\bgreetings\b', user_input):
+        return random.choice(responses["greeting"])
+    elif re.search(r'\bgoodbye\b|\bbye\b', user_input):
+        return random.choice(responses["goodbye"])
+    elif re.search(r'\bthank you\b|\bthanks\b', user_input):
+        return random.choice(responses["thanks"])
+    else:
+        return random.choice(responses["default"])
+
+# Main chatbot loop
+def chatbot():
+    print("🤖 Chatbot: Hello! I'm your friendly chatbot. Type 'exit' to end the conversation.")
+    
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() == 'exit':
+            print("🤖 Chatbot: Goodbye! Have a great day!")
+            break
+        
+        response = get_response(user_input)
+        print("🤖 Chatbot:", response)
+
+if __name__ == "__main__":
+    chatbot()
